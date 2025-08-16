@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import theme from './theme/theme';
 import Layout from './components/common/Layout';
+import AdminLayout from './components/common/AdminLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 
 // Pages
@@ -45,10 +46,10 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/verify" element={<PublicVerification />} />
-              
+
+              {/* User Layout */}
               <Route path="/" element={<Layout />}>
                 <Route index element={<Navigate to="/dashboard" replace />} />
-                
                 <Route 
                   path="/dashboard" 
                   element={
@@ -57,7 +58,6 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
-                
                 <Route 
                   path="/register" 
                   element={
@@ -66,7 +66,6 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
-                
                 <Route 
                   path="/property/:id" 
                   element={
@@ -75,7 +74,6 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
-                
                 <Route 
                   path="/transfer/:id" 
                   element={
@@ -84,23 +82,25 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
-                
+              </Route>
+
+              {/* Admin Layout */}
+              <Route path="/admin" element={<AdminLayout />}>
                 <Route 
-                  path="/verification-queue" 
-                  element={
-                    <ProtectedRoute adminOnly={true}>
-                      <VerificationQueue />
-                    </ProtectedRoute>
-                  } 
-                />
-                
-                <Route 
-                  path="/admin" 
+                  index
                   element={
                     <ProtectedRoute adminOnly={true}>
                       <AdminDashboard />
                     </ProtectedRoute>
-                  } 
+                  }
+                />
+                <Route 
+                  path="verification-queue"
+                  element={
+                    <ProtectedRoute adminOnly={true}>
+                      <VerificationQueue />
+                    </ProtectedRoute>
+                  }
                 />
               </Route>
               

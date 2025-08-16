@@ -23,59 +23,38 @@ import {
 import {
   Menu as MenuIcon,
   Dashboard as DashboardIcon,
-  AddBox as AddBoxIcon,
   VerifiedUser as VerifiedUserIcon,
-  AccountBalance as AccountBalanceIcon,
+  AdminPanelSettings as AdminIcon,
   ExitToApp as ExitToAppIcon,
   Person as PersonIcon,
-  AdminPanelSettings as AdminIcon,
-  Search as SearchIcon,
-  SwapHoriz as SwapHorizIcon,
-  Description as DescriptionIcon,
 } from '@mui/icons-material';
 
 const drawerWidth = 280;
 
-const Layout = () => {
+const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  
-  // Mock user data - replace with actual auth context
+
+  // Mock admin user
   const user = {
-    name: 'John Doe',
-    role: 'citizen', // 'citizen' | 'admin'
-    email: 'john.doe@example.com'
+    name: 'Admin User',
+    role: 'admin',
+    email: 'admin@example.com',
   };
 
-  const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-    { text: 'Register Property', icon: <AddBoxIcon />, path: '/register' },
-    { text: 'Transfer Property', icon: <SwapHorizIcon />, path: '/transfer' },
-    { text: 'Property Details', icon: <DescriptionIcon />, path: '/property/1' },
-    { text: 'Public Verification', icon: <SearchIcon />, path: '/verify' },
+  const adminMenuItems = [
+    { text: 'Admin Dashboard', icon: <AdminIcon />, path: '/admin' },
+    { text: 'Verification Queue', icon: <VerifiedUserIcon />, path: '/admin/verification-queue' },
   ];
 
-
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileMenuClose = () => {
-    setAnchorEl(null);
-  };
-
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+  const handleProfileMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleProfileMenuClose = () => setAnchorEl(null);
   const handleLogout = () => {
-    // Implement logout logic
     localStorage.removeItem('token');
     navigate('/login');
   };
@@ -83,19 +62,17 @@ const Layout = () => {
   const drawer = (
     <Box sx={{ height: '100%', bgcolor: 'background.paper' }}>
       <Box sx={{ p: 3, textAlign: 'center' }}>
-        <AccountBalanceIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
+        <AdminIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
         <Typography variant="h6" color="primary" fontWeight="bold">
-          Land Registry
+          Admin Panel
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Government of Sri Lanka
+          Land Registry Admin
         </Typography>
       </Box>
-      
       <Divider />
-      
       <List sx={{ px: 2 }}>
-        {menuItems.map((item) => (
+        {adminMenuItems.map((item) => (
           <ListItem
             key={item.text}
             button
@@ -103,10 +80,10 @@ const Layout = () => {
             sx={{
               borderRadius: 2,
               mb: 0.5,
-              bgcolor: location.pathname === item.path ? 'primary.light' : 'transparent',
+              bgcolor: location.pathname === item.path ? 'secondary.light' : 'transparent',
               color: location.pathname === item.path ? 'white' : 'text.primary',
               '&:hover': {
-                bgcolor: location.pathname === item.path ? 'primary.main' : 'grey.100',
+                bgcolor: location.pathname === item.path ? 'secondary.main' : 'grey.100',
               },
             }}
           >
@@ -116,8 +93,6 @@ const Layout = () => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
-        
-  {/* Admin section removed for user layout */}
       </List>
     </Box>
   );
@@ -140,11 +115,9 @@ const Layout = () => {
           >
             <MenuIcon />
           </IconButton>
-          
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Sri Lankan Land Registry System
+            Land Registry Admin
           </Typography>
-          
           <Button
             color="inherit"
             onClick={handleProfileMenuOpen}
@@ -152,7 +125,6 @@ const Layout = () => {
           >
             {user.name}
           </Button>
-          
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
@@ -172,7 +144,6 @@ const Layout = () => {
           </Menu>
         </Toolbar>
       </AppBar>
-
       <Box
         component="nav"
         sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
@@ -189,7 +160,6 @@ const Layout = () => {
         >
           {drawer}
         </Drawer>
-        
         <Drawer
           variant="permanent"
           sx={{
@@ -201,7 +171,6 @@ const Layout = () => {
           {drawer}
         </Drawer>
       </Box>
-
       <Box
         component="main"
         sx={{
@@ -220,4 +189,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default AdminLayout;
