@@ -216,7 +216,9 @@ const Dashboard = () => {
               </List>
             </CardContent>
             <CardActions>
-              <Button color="primary">View All Properties</Button>
+              <Button color="primary" onClick={() => navigate('/properties')}>
+                View All Properties
+              </Button>
             </CardActions>
           </Card>
         </Grid>

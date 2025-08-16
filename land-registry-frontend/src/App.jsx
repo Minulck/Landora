@@ -21,6 +21,8 @@ import PropertyTransfer from './pages/PropertyTransfer';
 import PublicVerification from './pages/PublicVerification';
 import AdminDashboard from './pages/AdminDashboard';
 
+import AllProperties from './pages/AllProperties';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -63,6 +65,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <LandRegistration />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/properties" 
+                  element={
+                    <ProtectedRoute>
+                      <AllProperties />
                     </ProtectedRoute>
                   } 
                 />
